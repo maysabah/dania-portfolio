@@ -993,8 +993,8 @@
   justify-content: center;
   padding: 1.5rem;
   background: var(--overlay);
-  backdrop-filter: blur(16px) saturate(1.1);
-  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  backdrop-filter: blur(10px) saturate(1.25);
+  -webkit-backdrop-filter: blur(10px) saturate(1.25);
   animation: fade-in 0.6s var(--ease);
   transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
 }
