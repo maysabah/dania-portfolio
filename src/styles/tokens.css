@@ -67,7 +67,7 @@
 
   /* Backgrounds */
   --nav-bg: rgba(244, 241, 234, 0.72);
-  --overlay: rgba(246, 244, 239, 0.12);
+  --overlay: rgba(246, 244, 239, 0.18);
   --aurora-1: rgba(203, 175, 124, 0.4);
   --aurora-2: rgba(176, 148, 108, 0.28);
   --aurora-3: rgba(224, 205, 165, 0.34);
@@ -108,7 +108,7 @@
 
   /* Backgrounds — richer, more luminous aurora on dark */
   --nav-bg: rgba(16, 15, 14, 0.66);
-  --overlay: rgba(10, 9, 8, 0.22);
+  --overlay: rgba(12, 11, 10, 0.28);
   --aurora-1: rgba(216, 186, 134, 0.26);
   --aurora-2: rgba(150, 118, 78, 0.22);
   --aurora-3: rgba(120, 96, 150, 0.12);
@@ -143,7 +143,7 @@
     --glass-brd: rgba(242, 239, 232, 0.09);
     --glass-blur: 20px;
     --nav-bg: rgba(16, 15, 14, 0.66);
-    --overlay: rgba(10, 9, 8, 0.22);
+    --overlay: rgba(12, 11, 10, 0.28);
     --aurora-1: rgba(216, 186, 134, 0.26);
     --aurora-2: rgba(150, 118, 78, 0.22);
     --aurora-3: rgba(120, 96, 150, 0.12);

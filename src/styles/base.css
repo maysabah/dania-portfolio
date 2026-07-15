@@ -72,6 +72,17 @@ button {
   will-change: transform;
 }
 
+/* ------------------------------------------------ PAGE SHELL ----
+   Wraps the whole page. While the intro is open it is blurred directly with
+   `filter: blur()`, which is production-reliable (unlike backdrop-filter, which
+   can silently fail behind certain stacking/compositing setups). */
+.page-shell {
+  transition: filter 0.7s var(--ease);
+}
+.page-shell--blurred {
+  filter: blur(13px) saturate(1.05);
+}
+
 /* ------------------------------------------------ CINEMATIC BACKGROUND ----
    Four fixed layers, all GPU-friendly (transform/opacity only). */
 .bg {

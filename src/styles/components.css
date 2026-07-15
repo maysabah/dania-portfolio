@@ -987,14 +987,19 @@
 .intro {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
+  /* Non-fully-transparent tint so backdrop-filter has a surface to sit on
+     (a fully transparent background can make backdrop-filter appear invisible). */
   background: var(--overlay);
-  backdrop-filter: blur(10px) saturate(1.25);
-  -webkit-backdrop-filter: blur(10px) saturate(1.25);
+  /* Enhancement layer: on top of the reliable .page-shell blur, this frosts the
+     glass further where the browser renders it. Both prefixes for Safari/iOS. */
+  backdrop-filter: blur(16px) saturate(1.1);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  will-change: backdrop-filter;
   animation: fade-in 0.6s var(--ease);
   transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
 }

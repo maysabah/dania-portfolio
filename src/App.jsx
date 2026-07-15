@@ -38,50 +38,58 @@ export default function App() {
     setTimeout(() => setShowIntro(false), 700);
   }, []);
 
+  // Blur the whole page behind the intro. This lives on a wrapper (a sibling of
+  // the intro), NOT the intro's backdrop — `filter: blur()` is universally
+  // supported and immune to the containing-block quirks that make
+  // backdrop-filter silently fail in some production/browser combinations.
+  const pageBlurred = showIntro && !hiding;
+
   return (
     <>
       <div className="scroll-progress" aria-hidden="true" />
 
-      {/* Layered cinematic background: aurora + mesh orbs + grid + grain */}
-      <div className="bg" aria-hidden="true">
-        <div className="bg__aurora" />
-        <div className="bg__orbs">
-          <span />
-          <span />
-          <span />
+      <div className={`page-shell${pageBlurred ? " page-shell--blurred" : ""}`}>
+        {/* Layered cinematic background: aurora + mesh orbs + grid + grain */}
+        <div className="bg" aria-hidden="true">
+          <div className="bg__aurora" />
+          <div className="bg__orbs">
+            <span />
+            <span />
+            <span />
+          </div>
+          <div className="bg__grid" />
+          <div className="bg__noise" />
         </div>
-        <div className="bg__grid" />
-        <div className="bg__noise" />
+
+        <Navbar theme={theme} onToggleTheme={toggle} active={active} />
+
+        <main>
+          <Hero photo={daniaPhoto} />
+
+          <div className="content">
+            <div className="content__grid">
+              <aside className="sidebar">
+                <Education />
+                <Skills />
+                <Languages />
+                <Interests />
+              </aside>
+
+              <div className="main-col">
+                <Experience />
+                <Career />
+                <Courses />
+              </div>
+            </div>
+
+            <Contact />
+          </div>
+        </main>
+
+        <Footer />
       </div>
 
       {showIntro && <Intro photo={daniaPhoto} hiding={hiding} onEnter={enter} />}
-
-      <Navbar theme={theme} onToggleTheme={toggle} active={active} />
-
-      <main>
-        <Hero photo={daniaPhoto} />
-
-        <div className="content">
-          <div className="content__grid">
-            <aside className="sidebar">
-              <Education />
-              <Skills />
-              <Languages />
-              <Interests />
-            </aside>
-
-            <div className="main-col">
-              <Experience />
-              <Career />
-              <Courses />
-            </div>
-          </div>
-
-          <Contact />
-        </div>
-      </main>
-
-      <Footer />
     </>
   );
 }
