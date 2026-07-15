@@ -1,0 +1,154 @@
+/* =============================================================================
+   DESIGN TOKENS
+   Luxury, brand-neutral system: champagne gold + warm graphite neutrals.
+   Two fully distinct themes (not an inversion) driven by [data-theme].
+   Each theme carries its own shadows, gradients, glass and aurora.
+   ========================================================================== */
+
+:root {
+  /* Type families */
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Type scale */
+  --fs-eyebrow: 0.72rem;
+  --fs-xs: 0.78rem;
+  --fs-sm: 0.87rem;
+  --fs-base: 0.95rem;
+  --fs-md: 1.06rem;
+  --fs-lg: 1.32rem;
+  --fs-xl: clamp(1.5rem, 2.6vw, 1.95rem);
+
+  /* Radii */
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-full: 999px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout */
+  --nav-h: 68px;
+  --maxw: 1180px;
+}
+
+/* ------------------------------------------------------------ LIGHT THEME */
+:root,
+:root[data-theme="light"] {
+  --bg: #f4f1ea;
+  --bg-2: #eeeae1;
+  --surface: #fffdf9;
+  --surface-2: #f2efe8;
+  --text: #1b1a17;
+  --text-2: #55524b;
+  --text-3: #8b877e;
+  --border: rgba(27, 26, 23, 0.1);
+  --border-2: rgba(27, 26, 23, 0.16);
+
+  --accent: #a9854e;
+  --accent-2: #c2a679;
+  --accent-soft: rgba(169, 133, 78, 0.12);
+  --accent-line: rgba(169, 133, 78, 0.34);
+
+  --grad-accent: linear-gradient(135deg, #cbaf7c, #a9854e);
+  --grad-text: linear-gradient(120deg, #2a2823 28%, #8a6d3f);
+
+  --shadow-sm: 0 1px 2px rgba(28, 26, 22, 0.04), 0 3px 10px rgba(28, 26, 22, 0.05);
+  --shadow-md: 0 10px 30px rgba(28, 26, 22, 0.09);
+  --shadow-lg: 0 30px 70px rgba(28, 26, 22, 0.14);
+  --glow: rgba(194, 166, 121, 0.5);
+
+  /* Glass */
+  --glass-bg: rgba(255, 253, 249, 0.66);
+  --glass-brd: rgba(27, 26, 23, 0.08);
+  --glass-blur: 16px;
+
+  /* Backgrounds */
+  --nav-bg: rgba(244, 241, 234, 0.72);
+  --overlay: rgba(24, 21, 16, 0.5);
+  --aurora-1: rgba(203, 175, 124, 0.4);
+  --aurora-2: rgba(176, 148, 108, 0.28);
+  --aurora-3: rgba(224, 205, 165, 0.34);
+  --grid-color: rgba(27, 26, 23, 0.05);
+  --noise-opacity: 0.03;
+  --orb-opacity: 0.18;
+}
+
+/* ------------------------------------------------------------- DARK THEME */
+:root[data-theme="dark"] {
+  --bg: #100f0e;
+  --bg-2: #0b0a09;
+  --surface: #1a1917;
+  --surface-2: #211f1c;
+  --text: #f3f0e9;
+  --text-2: #b2ada3;
+  --text-3: #7c766b;
+  --border: rgba(242, 239, 232, 0.1);
+  --border-2: rgba(242, 239, 232, 0.18);
+
+  --accent: #d8ba86;
+  --accent-2: #e6cfa0;
+  --accent-soft: rgba(216, 186, 134, 0.14);
+  --accent-line: rgba(216, 186, 134, 0.32);
+
+  --grad-accent: linear-gradient(135deg, #e6cfa0, #c9a86a);
+  --grad-text: linear-gradient(120deg, #f3f0e9 26%, #d8ba86);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35), 0 4px 14px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 14px 40px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 40px 90px rgba(0, 0, 0, 0.66);
+  --glow: rgba(216, 186, 134, 0.34);
+
+  /* Glass — softer, darker, more blur than light */
+  --glass-bg: rgba(28, 26, 23, 0.5);
+  --glass-brd: rgba(242, 239, 232, 0.09);
+  --glass-blur: 20px;
+
+  /* Backgrounds — richer, more luminous aurora on dark */
+  --nav-bg: rgba(16, 15, 14, 0.66);
+  --overlay: rgba(6, 5, 4, 0.66);
+  --aurora-1: rgba(216, 186, 134, 0.26);
+  --aurora-2: rgba(150, 118, 78, 0.22);
+  --aurora-3: rgba(120, 96, 150, 0.12);
+  --grid-color: rgba(242, 239, 232, 0.04);
+  --noise-opacity: 0.05;
+  --orb-opacity: 0.26;
+}
+
+/* No-JS fallback: honour OS scheme when no data-theme is present. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #100f0e;
+    --bg-2: #0b0a09;
+    --surface: #1a1917;
+    --surface-2: #211f1c;
+    --text: #f3f0e9;
+    --text-2: #b2ada3;
+    --text-3: #7c766b;
+    --border: rgba(242, 239, 232, 0.1);
+    --border-2: rgba(242, 239, 232, 0.18);
+    --accent: #d8ba86;
+    --accent-2: #e6cfa0;
+    --accent-soft: rgba(216, 186, 134, 0.14);
+    --accent-line: rgba(216, 186, 134, 0.32);
+    --grad-accent: linear-gradient(135deg, #e6cfa0, #c9a86a);
+    --grad-text: linear-gradient(120deg, #f3f0e9 26%, #d8ba86);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35), 0 4px 14px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 14px 40px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 40px 90px rgba(0, 0, 0, 0.66);
+    --glow: rgba(216, 186, 134, 0.34);
+    --glass-bg: rgba(28, 26, 23, 0.5);
+    --glass-brd: rgba(242, 239, 232, 0.09);
+    --glass-blur: 20px;
+    --nav-bg: rgba(16, 15, 14, 0.66);
+    --overlay: rgba(6, 5, 4, 0.66);
+    --aurora-1: rgba(216, 186, 134, 0.26);
+    --aurora-2: rgba(150, 118, 78, 0.22);
+    --aurora-3: rgba(120, 96, 150, 0.12);
+    --grid-color: rgba(242, 239, 232, 0.04);
+    --noise-opacity: 0.05;
+    --orb-opacity: 0.26;
+  }
+}

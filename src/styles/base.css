@@ -1,0 +1,308 @@
+/* =============================================================================
+   BASE — reset, document, background, animations, accessibility, utilities
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.5s var(--ease), color 0.5s var(--ease);
+}
+
+/* Cross-fade colours on theme change; elements with their own transition
+   shorthand override this and include colour props themselves. */
+body * {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.45s;
+  transition-timing-function: var(--ease);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+a {
+  color: inherit;
+}
+ul {
+  list-style: none;
+}
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------------------------------------------------- READING PROGRESS BAR */
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: var(--grad-accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  z-index: 200;
+  will-change: transform;
+}
+
+/* ------------------------------------------------ CINEMATIC BACKGROUND ----
+   Four fixed layers, all GPU-friendly (transform/opacity only). */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* 1 — Aurora mesh */
+.bg__aurora {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(38% 45% at 18% 22%, var(--aurora-1), transparent 70%),
+    radial-gradient(42% 50% at 82% 18%, var(--aurora-3), transparent 72%),
+    radial-gradient(50% 55% at 65% 88%, var(--aurora-2), transparent 74%),
+    radial-gradient(40% 45% at 30% 78%, var(--aurora-3), transparent 70%);
+  filter: blur(30px);
+  animation: aurora 26s var(--ease) infinite alternate;
+}
+@keyframes aurora {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, 2%, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-1%, 1%, 0) scale(1.04);
+  }
+}
+
+/* 2 — Floating blurred orbs (depth) */
+.bg__orbs span {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--grad-accent);
+  filter: blur(90px);
+  opacity: var(--orb-opacity);
+}
+.bg__orbs span:nth-child(1) {
+  width: 520px;
+  height: 520px;
+  top: -180px;
+  right: -120px;
+  animation: orb-a 24s var(--ease) infinite;
+}
+.bg__orbs span:nth-child(2) {
+  width: 440px;
+  height: 440px;
+  bottom: -160px;
+  left: -140px;
+  opacity: calc(var(--orb-opacity) * 0.7);
+  animation: orb-b 30s var(--ease) infinite;
+}
+.bg__orbs span:nth-child(3) {
+  width: 320px;
+  height: 320px;
+  top: 42%;
+  left: 56%;
+  opacity: calc(var(--orb-opacity) * 0.5);
+  animation: orb-a 28s var(--ease) infinite reverse;
+}
+@keyframes orb-a {
+  50% {
+    transform: translate(-50px, 50px) scale(1.12);
+  }
+}
+@keyframes orb-b {
+  50% {
+    transform: translate(60px, -40px) scale(1.1);
+  }
+}
+
+/* 3 — Faint dot grid, faded toward the top */
+.bg__grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--grid-color) 1px, transparent 1px);
+  background-size: 34px 34px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 15%, transparent 72%);
+  mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 15%, transparent 72%);
+}
+
+/* 4 — Film grain */
+.bg__noise {
+  position: absolute;
+  inset: 0;
+  opacity: var(--noise-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* ---------------------------------------------------------- SCROLL REVEAL */
+[data-reveal] {
+  opacity: 0;
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  animation: reveal-up 0.75s var(--ease-out) backwards;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------- INTERACTIONS */
+.magnetic {
+  display: inline-flex;
+  transition: transform 0.35s var(--ease);
+  will-change: transform;
+}
+
+/* --------------------------------------------------------- VIEW TRANSITION
+   Circular reveal of the new theme, anchored to the toggle. */
+@supports (view-transition-name: root) {
+  ::view-transition-old(root) {
+    animation: none;
+  }
+  ::view-transition-new(root) {
+    animation: vt-reveal 0.55s var(--ease-out);
+  }
+  @keyframes vt-reveal {
+    from {
+      clip-path: circle(0% at var(--vt-x, 50%) var(--vt-y, 50%));
+    }
+    to {
+      clip-path: circle(160% at var(--vt-x, 50%) var(--vt-y, 50%));
+    }
+  }
+}
+
+/* -------------------------------------------------------- REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+  .bg__aurora,
+  .bg__orbs span {
+    animation: none !important;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+/* --------------------------------------------------------------- UTILITIES */
+.eyebrow {
+  display: inline-block;
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hairline {
+  display: block;
+  width: 46px;
+  height: 1px;
+  background: var(--accent-line);
+}
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 0.82rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--r-full);
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease),
+    background-color 0.35s var(--ease), color 0.35s var(--ease),
+    border-color 0.35s var(--ease);
+}
+.btn .icon {
+  transition: transform 0.35s var(--ease);
+}
+.btn:hover .icon {
+  transform: translateX(3px);
+}
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -130%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: left 0.7s var(--ease);
+}
+.btn:hover::after {
+  left: 150%;
+}
+.btn-primary {
+  background: var(--grad-accent);
+  color: #1c1508;
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px var(--glow);
+}

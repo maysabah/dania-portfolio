@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicons: custom "DA" champagne monogram (all platforms) -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="mask-icon" href="/favicon.svg" color="#a9854e" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta
+      name="description"
+      content="Dania Abdul Kareem — Biomedical Engineering portfolio. Creative graduate passionate about AI, medical technology, and design."
+    />
+    <meta name="theme-color" content="#f6f4ef" />
+    <title>Dania Abdul Kareem · Biomedical Portfolio</title>
+
+    <!-- No-flash theme: resolve the theme before first paint. -->
+    <script>
+      (function () {
+        try {
+          var key = "dania-theme";
+          var saved = localStorage.getItem(key);
+          var theme;
+          if (saved === "light" || saved === "dark") {
+            theme = saved;
+          } else {
+            var prefersDark = window.matchMedia(
+              "(prefers-color-scheme: dark)"
+            ).matches;
+            var hour = new Date().getHours();
+            var night = hour >= 19 || hour < 6;
+            theme = prefersDark || night ? "dark" : "light";
+          }
+          document.documentElement.setAttribute("data-theme", theme);
+          document.documentElement.style.colorScheme = theme;
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Premium font pairing: Fraunces (display) + Inter (UI). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
